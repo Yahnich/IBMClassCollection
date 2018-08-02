@@ -1,0 +1,19 @@
+                                            REF(FRF)
+
+
+                R ARTCLREC
+
+
+     A            ARNOAR    R    5          REFFLD(NOAR)
+
+
+     A            ARDESN    R   30A         REFFLD(DESN)
+
+
+     A            ARDESF    R   30A         REFFLD(DESF)
+
+
+     A            ARCVAT    R    1A         REFFLD(CVAT)
+
+
+     A            ARPRIC    R   11          REFFLD(PRIC) 
