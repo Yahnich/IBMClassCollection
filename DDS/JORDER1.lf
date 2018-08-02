@@ -1,0 +1,7 @@
+000100180719                R JOINREC                   JFILE(ORDER CLIENT ARTICLE)
+000200180719                J                           JOIN(ORDER CLIENT)
+000300180719                                            JFLD(ORNOCL CLNOCL)
+000400180719                J                           JOIN(ORDER ARTICLE)
+000500180719                                            JFLD(ORNOAR ARNOAR)
+000600180719                  ORNOCL                    JREF(1)
+000700180719                  ORNOAR                    JREF(1)
