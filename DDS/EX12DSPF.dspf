@@ -24,6 +24,7 @@
      A                                      CA12(12)
      A                                  1  2USER
      A                                  1 71SYSNAME
+
      A                                  1 36'Vendor Inquiry'
      A                                      DSPATR(HI)
      A                                      COLOR(WHT)
@@ -34,8 +35,6 @@
 
      A                                  8 24'Enter Vendor Number . .'
      A            VNDNBR    R        B  8 50CHECK(RZ)
-
-
      A  99                                  ERRMSG('Invalid Vendor  +
      A                                       Number - Press reset   +
      A                                      and re-enter' 99)
@@ -46,17 +45,14 @@
 
      A                                 23  4'F3 = Exit'
      A                                      COLOR(BLU)
-     
-     A                                 23 14'F12 = Cancel'
+                                       23 14'F12 = Back to Previous Vendor'
      A                                      COLOR(BLU)
-	 
      A                                 22  4'Please press Enter to continue'
      A                                      COLOR(BLU)
 
      A          R DSPLY_FMT
      A                                      CA03(03 'Exit Program')
      A                                      CA12(12 'Return to Prompt')
-	 
      A                                  1  2USER
      A                                  1 30'Vendor Address Inquiry'
      A                                      COLOR(WHT)
@@ -78,7 +74,7 @@
      A            VNDCITY   R        O  7 20COLOR(GRN)
 
      A            VNDSTATE  R        O  7 44COLOR(GRN)
-	 
+
      A            VNDZIPCODER        O  7 47COLOR(GRN)
 
      A            VNDAREACD R           8 20COLOR(GRN)
@@ -90,9 +86,9 @@
 
      A            VNDPRCHYTDR        O 10 19
      A                                      EDTCDE(A ¤)
-     A                                 10  2'Purchases YTD. :'
+                                       10  2'Purchases YTD. :'
 
-     A            VNDBALANCER        O 11 19
+     A            VNDBALANCER        O 11 21
      A N60                                  COLOR(GRN)
      A  60                                  COLOR(RED)
      A  60                                  DSPATR(RI)
@@ -104,3 +100,5 @@
      A                                      COLOR(BLU)
      A                                 23 12'F12 = Return to previous display'
      A                                      COLOR(BLU)
+
+ 
