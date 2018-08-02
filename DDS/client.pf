@@ -1,0 +1,10 @@
+000100180719                                            REF(FRF)
+000200180719                R CLNTREC
+000300180719     A            CLNOCL    R    5          REFFLD(NOCL)
+000400180719     A            CLNAME    R   25A         REFFLD(NAME)
+000500180719     A            CLCTPS    R   25A         REFFLD(CTPS)
+000600180719     A            CLSEXE    R    1A         REFFLD(SEXE)
+000700180719     A            CLADRS    R   25A         REFFLD(ADRS)
+000800180719     A            CLZIPC    R    5          REFFLD(ZIPC)
+000900180719     A            CLCITY    R   25A         REFFLD(CITY)
+001000180719     A            CLTELN    R    9          REFFLD(TELN)
