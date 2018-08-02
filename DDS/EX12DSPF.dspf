@@ -1,135 +1,53 @@
       **********************************************************************
-
-
       *                           VNDADR01                            *
-
-
       *                    Vendor Address Inquiry                     *
-
-
       **********************************************************************
-
-
       * This display file contains two record formats:                *
-
-
       *     PROMPT_FMT - prompts the user for a vendor number         *
-
-
       *     DSPLY_FMT  - displays vendor address                      *
-
-
       *                                                               *
-
-
       * INDICATORS:                                                   *
-
-
       *   03 - user requests to exit the program                      *
-
-
       *   10 - user requests to print vendor address                  *
-
-
       *   99 - invalid vendor number                                  *
-
-
       *****************************************************************
-
-
       *                      CHANGE LOG                               *
-
-
       * DATE        PROGRAMMER      DESCRIPTION                       *
-
-
       * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
-
-
       *01/22/96     R.P. Giv        New File                          *
-
-
       *****************************************************************
-
-
      A                                      DSPSIZ(24 80 *DS3)
-
-
      A                                      REF(*LIBL/VENDOR_PF)
-
-
      A                                      INDARA
-
-
      A          R PROMPT_FMT
-
-
      A                                      CA03(03)
-
-
      A                                      CA12(12)
-
-
      A                                  1  2USER
-
-
      A                                  1 71SYSNAME
-
-
-
      A                                  1 36'Vendor Inquiry'
-
-
      A                                      DSPATR(HI)
-
-
      A                                      COLOR(WHT)
 
-
-
      A                                  2 61DATE
-
-
      A                                      EDTCDE(Y)
-
-
      A                                  2 71TIME
 
-
-
      A                                  8 24'Enter Vendor Number . .'
-
-
      A            VNDNBR    R        B  8 50CHECK(RZ)
 
 
      A  99                                  ERRMSG('Invalid Vendor  +
-
-
      A                                       Number - Press reset   +
-
-
      A                                      and re-enter' 99)
-
-
      A                                      COLOR(WHT)
 
-
-
      A                                 12 29'Press Enter to Continue'
-
-
      A                                      COLOR(BLU)
-
-
 
      A                                 23  4'F3 = Exit'
-
-
      A                                      COLOR(BLU)
-
-
-                                       23 14'F12 = Cancel'
+     
+     A                                 23 14'F12 = Cancel'
 
 
      A                                      COLOR(BLU)
