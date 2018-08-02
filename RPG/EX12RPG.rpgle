@@ -28,30 +28,36 @@
      D  Exit                   3      3N
      D  Cancel                12     12N
      D  NotFound              99     99N
-     D  BalanceLow            60     60N
+     D  balanceLow            60     60N
+     D  lastVndr       S              5I 0
 
       ******************************************************************
 
        TodaysDate = %date(*date); // Get date from system
        ExFmt     Prompt_Fmt; // Prompt for vendor number
 
-       DoW Not Exit OR Cancel; // Do the following until user presses F3 (Exit)
-           BalanceLow = *Off;
-BP         NotFound= *off; // Initialize the record found indicator
-           Chain VndNbr Vendor_PF; // Find the vendor record
-
-BP         If %Found(Vendor_PF);  // If we find a valid vendor record:
-              If vndBalance > 5000;
-                  BalanceLow = *On;
-              EndIf;
-              ExFmt Dsply_Fmt;    // Disply the vendor record
-BP         Else;               // We did not find a record
-BP            NotFound = *on;  // Set the record found indicator on
+       lastVndr = VndNbr;
+       DoW Not Exit;
+           balanceLow = *Off;
+           notFound= *off;
+           If Not Cancel;
+               Chain VndNbr VENDOR_PF;
+           Else;
+               Chain lastVndr VENDOR_PF;
            EndIf;
 
-                 ExFmt Prompt_Fmt; // Prompt for a new vendor number
+           If %Found(Vendor_PF);
+               if vndBalance > 5000;
+                   balanceLow = *On;
+               EndIf;
+               lastVndr = VndNbr;
+               ExFmt Dsply_Fmt;
+           Else;
+               notFound = *On;
+           EndIf;
+
+           ExFmt Prompt_Fmt;
        EndDo;
 
        *inLr = *on;  // End the program
       ******************************************************************
- 
