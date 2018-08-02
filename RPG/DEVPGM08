@@ -1,0 +1,57 @@
+     FVNDNAM_LF IF   E             Disk
+
+
+     FPRTEX8ST7 O    E             Printer OflInd(Overflow)
+
+
+
+        Read VNDNAM_LF;
+
+
+        Write Heading;
+
+
+        // Start read loop until end of file
+
+
+        Dow Not %Eof(VNDNAM_LF);
+
+
+            If vndActive = 'A';
+
+
+                count = count + 1;
+
+
+                totPurch = totPurch + vndPrchYTD;
+
+
+                totBal = totBal + vndBalance;
+
+
+            EndIf;
+
+
+
+            If Overflow;
+
+
+                Overflow = *Off;
+
+
+            EndIf;
+
+
+            Write Detail;
+
+
+            Read VNDNAM_LF;
+
+
+        EndDo;
+
+
+        Write Total;
+
+
+        *InLr = *On; 
