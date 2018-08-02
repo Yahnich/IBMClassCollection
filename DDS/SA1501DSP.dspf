@@ -1,0 +1,28 @@
+     A                                      DSPSIZ(24 80 *DS3)
+
+
+     A                                      CF03(03 'EXIT')
+
+
+     A          R MENU
+
+
+     A                                  5 33'Programmer Menu'
+
+
+     A                                  8 32'1. Display Job'
+
+
+     A                                 10 32'2. Work with Spooled Files'
+
+
+     A                                 12 32'3. Work with Submitted jobs'
+
+
+     A            OPTION         1   B 15 46
+
+
+     A                                 15 33'Enter Option'
+
+
+     A                                 20 37'F3=Exit' 
