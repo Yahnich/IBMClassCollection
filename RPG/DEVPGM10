@@ -1,0 +1,166 @@
+     FPOTRANS_PFIF   E             Disk
+
+
+     FPOPMNT02  O    E             Printer OflInd(Overflow) IndDS(prtIndicators)
+
+
+
+　
+
+
+     D prtIndicators   DS
+
+
+     D iNotFound              10     10N
+
+
+     D iNotAdd                11     11N
+
+
+     D iAddition              12     12N
+
+
+     D iChange                13     13N
+
+
+     D iDelete                14     14N
+
+
+     D iInvalid               15     15N
+
+
+
+　
+
+
+        Read POTRANS_PF;
+
+
+        Write Heading;
+
+
+        // Start read loop until end of file
+
+
+        Dow Not %Eof(POTRANS_PF);
+
+
+
+            iNotFOund = *Off;
+
+
+            iNotAdd = *Off;
+
+
+            iAddition = *Off;
+
+
+            iChange = *Off;
+
+
+            iDelete = *Off;
+
+
+            iInvalid = *Off;
+
+
+
+            ExSR FilterTransactions;
+
+
+
+            If Overflow;
+
+
+                Overflow = *Off;
+
+
+                Write Heading;
+
+
+            EndIf;
+
+
+            Write TrnDetail;
+
+
+            Read POTRANS_PF;
+
+
+        EndDo;
+
+
+        totCnt = errCnt + addCnt + chgCnt;
+
+
+        Write Total;
+
+
+        *InLr = *On;
+
+
+
+        BegSR FilterTransactions;
+
+
+          Select;
+
+
+              When trnCode = '';
+
+
+                iNotFOund = *On;
+
+
+                errCnt = errCnt +1;
+
+
+              When trnCode = 'A' AND potStatus = 'C';
+
+
+                iNotAdd = *On;
+
+
+                errCnt = errCnt + 1;
+
+
+              When trnCode = 'A';
+
+
+                iAddition = *On;
+
+
+                addCnt = addCnt + 1;
+
+
+              When trnCode = 'C';
+
+
+                iChange = *On;
+
+
+                chgCnt = chgCnt + 1;
+
+
+              When trnCode = 'D';
+
+
+                iDelete = *On;
+
+
+                delCnt = delCnt + 1;
+
+
+              Other;
+
+
+                iInvalid = *On;
+
+
+                errCnt = errCnt + 1;
+
+
+           EndSl;
+
+
+        ENDSR; 
