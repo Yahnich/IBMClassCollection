@@ -48,143 +48,59 @@
      A                                      COLOR(BLU)
      
      A                                 23 14'F12 = Cancel'
-
-
      A                                      COLOR(BLU)
-
-
+	 
      A                                 22  4'Please press Enter to continue'
-
-
      A                                      COLOR(BLU)
-
-
 
      A          R DSPLY_FMT
-
-
      A                                      CA03(03 'Exit Program')
-
-
      A                                      CA12(12 'Return to Prompt')
-
-
+	 
      A                                  1  2USER
-
-
      A                                  1 30'Vendor Address Inquiry'
-
-
      A                                      COLOR(WHT)
-
-
      A                                  1 71SYSNAME
 
-
-
      A                                  2 61DATE
-
-
      A                                      EDTCDE(Y)
-
-
      A                                  2 71TIME
 
-
-
      A                                  4  2'Vendor Number . . :'
-
-
      A            VNDNBR    R        O  4 22COLOR(WHT)
 
-
-
      A            VNDNAME   R        O  5 20COLOR(GRN)
-
-
      A                                  5  2'Name . . . . . :'
 
-
-
      A            VNDSTREET R        O  6 20COLOR(GRN)
-
-
      A                                  6  2'Address. . . . :'
-
-
 
      A            VNDCITY   R        O  7 20COLOR(GRN)
 
-
-
      A            VNDSTATE  R        O  7 44COLOR(GRN)
-
-
-
+	 
      A            VNDZIPCODER        O  7 47COLOR(GRN)
 
-
-
      A            VNDAREACD R           8 20COLOR(GRN)
-
-
      A            VNDTELNO  R        O  8 24COLOR(GRN)
-
-
      A                                  8  2'Telephone. . . :'
 
-
-
      A            VNDSALES  R        O  9 20COLOR(GRN)
-
-
      A                                  9  2'Sales Person . :'
 
-
-
      A            VNDPRCHYTDR        O 10 19
-
-
      A                                      EDTCDE(A ¤)
-
-
-                                       10  2'Purchases YTD. :'
-
-
+     A                                 10  2'Purchases YTD. :'
 
      A            VNDBALANCER        O 11 19
-
-
      A N60                                  COLOR(GRN)
-
-
      A  60                                  COLOR(RED)
-
-
      A  60                                  DSPATR(RI)
-
-
      A                                      EDTCDE(A ¤)
-
-
      A                                 11  2'Balance Owed . :'
 
 
-
-　
-
-
      A                                 23  2'F3 = Exit'
-
-
      A                                      COLOR(BLU)
-
-
      A                                 23 12'F12 = Return to previous display'
-
-
      A                                      COLOR(BLU)
-
-
-
- 
