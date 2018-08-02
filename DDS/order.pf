@@ -1,0 +1,13 @@
+                                            REF(FRF)
+
+
+                R ORDERREC
+
+
+     A            ORNOCL    R               REFFLD(NOCL)
+
+
+     A            ORNOAR    R               REFFLD(NOAR)
+
+
+     A            ORQNTY    R               REFFLD(QNTY) 
