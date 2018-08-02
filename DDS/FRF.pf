@@ -1,0 +1,52 @@
+     A          R FRF
+
+
+********************************** CLIENT DATA *********************************
+
+
+     A            NOCL           5          TEXT('CLIENT NUMBER')
+
+
+     A            NAME          25A         TEXT('CLIENT NAME')
+
+
+     A            CTPS          25A         TEXT('CONTACT PERSON')
+
+
+     A            SEXE           1A         TEXT('CONTACT PERSEON SEX')
+
+
+     A            ADRS          25A         TEXT('CLIENT ADDRESS')
+
+
+     A            ZIPC           5          TEXT('CLIENT ZIP CODE')
+
+
+     A            CITY          25A         TEXT('CLIENT CITY')
+
+
+     A            TELN           9          TEXT('CLIENT TELEPHONE')
+
+
+     ************************* ARTICLES ****************************************
+
+
+     A            NOAR           5          TEXT('ARTICLE NUMBER')
+
+
+     A            DESN          30A         TEXT('ARTICLE DESCRIPTION NL')
+
+
+     A            DESF          30A         TEXT('ARTICLE DESCRIPTION FR')
+
+
+     A            CVAT           1A         TEXT('VAT CODE')
+
+
+     A            PRIC          11          TEXT('ARTICLE PRICE')
+
+
+     **************************** ORDERS ***************************************
+
+
+     A            QNTY           5          TEXT('ORDER QUANTITY') 
