@@ -1,76 +1,84 @@
-      **********************************************************************
-      *                        VNRADR01                                    *
-      *                  Vendor Address Inquiry                            *
-      **********************************************************************
-      * This program prompts the user for a vendor number and displays     *
-      * the vendor's address information on the screen.                    *
-      *                                                                    *
-      * The user has options to exit the program and to print a vendor     *
-      * record.                                                            *
-      *                                                                    *
-      * INDICATORS:                                                        *
-      *   Exit      - the user requests to exit the program                *
-      *   PrintIt   - the user requests to print vendor address            *
-      *   NotFound  -  no vendor found to match the input vendor number    *
-      **********************************************************************
-      ******************************************************************
+     A**********************************************************************
+     A*                           VNDINQS                             *
+     A*              Inquiry by Vendor Number Display File            *
+     A**********************************************************************
+     A* THIS DISPLAY FILE CONTAINS THESE FORMATS:                     *
+     A*                                                               *
+     A*     PROMPT_FMT - Prompts for Vendor Number                    *
+     A*     DSPLY_FMT  - Displays a vendor record                     *
+     A*                                                               *
+     A* INDICATORS:                                                   *
+     A*   03 - User requests to exit the program                      *
+     A*   12 - Cancel (Return to prompt screen)                       *
+     A*   60 - Balance due > 5000.00                                  *
+     A*   96 - Invalid vendor number                                  *
+     A*****************************************************************
+     A                                      REF(*LIBL/VENDOR_PF)
+     A                                      INDARA
+     A          R HEADER_FMT
+                                        1  2USER
+     A                                  1 30'Vendor Inquiry'
+     A                                      COLOR(WHT)
+     A                                  1 71SYSNAME
+     A            TODAY         20A  O  2 48
+     A                                  2 71TIME
+     A
+     A          R PROMPT_FMT                OVERLAY PUTOVR
+     A                                      CA03(03 'End Program')
+                                            CA04(04 'Prompt Details')
+     A                                  3  3'Vendor number. . . . :'
+     A            VNDNBR_INQR     D  B  3 28OVRDTA
+                                            COLOR(WHT)
+     A                                      REFFLD(VNDNBR DICTIONARY)
+     A  96                                  ERRMSG('Invalid vendor number - pre-
+     A                                      ss reset and re-enter' 96)
+     A          R DSPLY_FMT                 OVERLAY PUTOVR
+     A                                  8  3'Name . . . . . . :'
+     A                                  9  3'Address  . . . . :'
+     A            VNDNAME   R        O  8 24OVRDTA
+     A            VNDSTREET R        O  9 24OVRDTA
+     A            VNDCITY   R        O 10 24OVRDTA
+     A            VNDSTATE  R        O 10 49OVRDTA
+     A            VNDZIPCODER        O 10 53OVRDTA
+     A                                 11  3'Telephone. . . . :'
+     A            VNDAREACD R        O 11 26OVRDTA
+     A                                 11 24'('
+     A                                 11 30')'
+     A            VNDTELNO  R        O 11 33OVRDTA
+     A                                      EDTWRD('0  -    ')
+     A                                 12  3'Sales Person . . :'
+     A            VNDSALES  R        O 12 24OVRDTA
+     A                                 13  3'Purchases YTD  . :'
+     A            VNDPRCHYTDR          13 24OVRDTA
+                                            EDTCDE(J)
+     A                                 14  3'Balance Owed . . :'
+     A            VNDBALANCER          14 26OVRDTA
+                                            EDTCDE(J)
+     A  60                                  DSPATR(HI)
+     A  60                                  COLOR(RED)
+     A
 
-       // Vendor Display Formats
-             // Vendor master File
-     FVendor_PF IF   E           K Disk
-      // Display File
-     FEX03INTER7CF   E             Workstn IndDS(WkIndicators)
-      // Indicator Data Structure
-     D MonEnum         S              9A   DIM(12) CTDATA PERRCD(6)
-     D DateSigEnum     S              2A   DIM(4) CTDATA
-     D dayEnd          S              1A
-     D WkIndicators    DS
-     D Exit                    3      3N
-     D ShowPrompt              4      4N
-     D HighBalance            60     60N
-     D NotFound               96     96N
+     A          R FKEYS_FMT                 OVERLAY
+                                       23  4'F3 = Exit'
+     A                                      COLOR(BLU)
+                                       23 18'F4 = Display Vendor Detail'
+     A                                      COLOR(BLU)
+     A                                 22  3'Please press enter to continue'
 
 
-      /FREE
-       dayEnd = %SUBST( %CHAR(*DAY):1 );
-       If dayEnd = '0' OR (*DAY > 10 AND *DAY < 20);
-           dayEnd = '4';
-       EndIf;
-       today = %trimr( MonEnum( (*MONTH) ) )
-               + ' '
-               + %CHAR(*DAY)
-               + DateSigEnum( %min( 4:%INT( dayEnd ) ) )
-               + ', ' + %CHAR(*YEAR);
-       Write HEADER_FMT;
-       Write FKEYS_FMT;
-       Exfmt Prompt_fmt; // Display Prompt_Fmt
+                R POPUP
+                                            WINDOW(07 20 6 40)
+                                            WDWBORDER((*COLOR WHT) +
+                                            (*CHAR '********'))
+                                            WDWTITLE((*TEXT 'Vendor Detail') +
+                                            *CENTER *TOP)
+     A                                  3  1'Vendor Name. :'
+     A                                  4  1'MTD Purchased:'
+                  VNDNAME   R        O  3 16
+                  VNDPRCHMTDR        O  4 16
 
+                R DUMMY
+                                            ASSUME
+                                        2  4' '
 
-       Dow NOT Exit;  // Continue process until user presses F3
-         Chain Vndnbr_inq Vendor_PF;     // Read record; valid key?
-         NotFound = NOT %found(Vendor_PF);
-         If ShowPrompt;
-       //      Write Popup;
-             ExFmt Popup;
-         ElseIf %found(Vendor_PF);
-             // Check whether balance owed is greater than 5000.00
-             HighBalance = VndBalance > 5000.00;
-             // Display details
-             Write DSPLY_FMT;
-         EndIf;
-
-         // No Item record found or F12 - display prompt
-         Exfmt Prompt_fmt; // Redisplay Prompt format
-
-       enddo;
-       *InLR = *ON;
-       //
-      /END-FREE
-**CtData MonEnum
-January  February March    April    May      June
-July     August   SeptemberOctober  November December
-**CtData DateSigEnum
-st
-nd
-rd
-th 
+ 
