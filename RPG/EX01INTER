@@ -1,0 +1,31 @@
+      // Vendor master File
+     FVendor_PF IF   E           K Disk
+      // Display File
+     FVndinqOVS7CF   E             Workstn IndDS(WkIndicators)
+      // Indicator Data Structure
+     D WkIndicators    DS
+     D Exit                    3      3N
+     D HighBalance            60     60N
+     D NotFound               96     96N
+      /FREE
+       Write HEADER_FMT;
+       Write FKEYS_FMT;
+       Exfmt Prompt_fmt; // Display Prompt_Fmt
+
+       Dow NOT Exit;  // Continue process until user presses F3
+         Chain Vndnbr_inq Vendor_PF;     // Read record; valid key?
+         NotFound = NOT %found(Vendor_PF);
+         If %found(Vendor_PF);
+             // Check whether balance owed is greater than 5000.00
+             HighBalance = VndBalance > 5000.00;
+             // Display details
+             Write DSPLY_FMT;
+         EndIf;
+
+         // No Item record found or F12 - display prompt
+         Exfmt Prompt_fmt; // Redisplay Prompt format
+
+       enddo;
+       *InLR = *ON;
+       //
+      /END-FREE 
