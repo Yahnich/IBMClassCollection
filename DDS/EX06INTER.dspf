@@ -1,0 +1,71 @@
+     A**********************************************************************
+     A*                           VNDINQS                             *
+     A*              Inquiry by Vendor Number Display File            *
+     A**********************************************************************
+     A* THIS DISPLAY FILE CONTAINS THESE FORMATS:                     *
+     A*                                                               *
+     A*     PROMPT_FMT - Prompts for Vendor Number                    *
+     A*     DSPLY_FMT  - Displays a vendor record                     *
+     A*                                                               *
+     A* INDICATORS:                                                   *
+     A*   03 - User requests to exit the program                      *
+     A*   12 - Cancel (Return to prompt screen)                       *
+     A*   60 - Balance due > 5000.00                                  *
+     A*   96 - Invalid vendor number                                  *
+     A*****************************************************************
+     A                                      REF(VENDOR_PF)
+                                            CA03(03)
+     A                                      INDARA
+                R VSEARCHDTA                SFL
+                  VNDNBR    R        O  7  2
+                  VNDNAME   R        O  7 10
+                  VNDAREACD R        O  7 37
+                  VNDTELNO  R        O  7 41
+                  VNDSALES  R        O  7 54
+
+     A          R VSEARCHCTL                SFLCTL(VSEARCHDTA)
+        85                                  SFLDSPCTL
+        95                                  SFLDSP
+                                            SFLSIZ(0016)
+                                            SFLPAG(0015)
+        75                                  SFLCLR
+        40                                  SFLEND(*MORE)
+                                            OVERLAY PUTOVR
+
+     A          R HEADER_FMT                OVERLAY PUTOVR
+                                        1  2USER
+     A                                  1 32'Vendor Name Display'
+     A                                      COLOR(WHT)
+     A                                  1 72SYSNAME
+     A                                  2 72TIME
+     A                                      COLOR(WHT)
+                                        2 63DATE
+     A                                      EDTCDE(Y)
+     A          R PROMPT_FMT                OVERLAY PUTOVR
+                                        3  2'Enter partial vendor name:'
+        20                              6 10'Vendor Name'
+     A                                      COLOR(WHT)
+     A  20                              6  2'Vendor#'
+     A                                      COLOR(WHT)
+     A  20                              6 37'Telephone'
+     A                                      COLOR(WHT)
+     A  20                              6 54'Sales Person'
+     A                                      COLOR(WHT)
+
+                  VNDNAMEINQR        B  3 29OVRDTA
+                                            COLOR(WHT)
+     A                                      REFFLD(VNDNAME)
+     A  96                                  ERRMSG('No vendors found' 96)
+                                        4  2'Press enter to continue'
+     A          R FKEYS_FMT                 OVERLAY
+                                       23  4'F3 = Exit'
+     A                                      COLOR(BLU)
+     A*%%RS+<record-sequences>
+     A*%%RS+ <sequence name="Untitled">
+     A*%%RS+  <device type="display" width="80" height="24" />
+     A*%%RS+  <record-write record-format="PROMPT_FMT" />
+     A*%%RS+  <record-write record-format="HEADER_FMT" />
+     A*%%RS+  <record-write record-format="VSEARCHDTA" />
+     A*%%RS+  <record-write record-format="VSEARCHCTL" />
+     A*%%RS+ </sequence>
+     A*%%RS </record-sequences> 
