@@ -1,0 +1,38 @@
+      ** Item Master File
+     FItem_PF   IF   E           K Disk
+      ** Display File
+     FItemInqDspCF   E             Workstn
+
+     C                   Dow       NOT *In03
+     C                   Eval      *In40 = *Off
+     C                   If        NOT *In40
+      ** Display details
+     C/EXEC SQL
+     C+ SELECT ITMNBR, ITMDESCR, ITMQTYOH, ITMQTYOO, VNDNBR, ITMVNDCAT#
+     C+ INTO :ITMNBR, :ITMDESCR, :ITMQTYOH, :ITMQTYOO, :VNDNBR, :ITMVNDCAT#
+     C+ FROM Item_PF
+     C+ WHERE ITMNBR = :ITMNBR
+     C/END-EXEC
+     C                   Dow       SqlCod = 0
+     C                   Eval      *In30 = (ItmQtyOH + ItmQtyOO) < 20
+     C                   Exfmt     Detail
+
+     C                   IF        *In03
+     C                   Eval      *InLR = *ON
+     C                   Return
+     C                   Endif
+     C                   Enddo
+     C                   Endif
+
+      ** No Item record found or F12 pressed - display prompt
+     C                   Eval      *In12 = *OFF
+     C                   Exfmt     Prompt
+     C                   Enddo
+     C                   Eval      *InLR = *ON
+     C                   Return
+
+      ****************************************************************
+     C     *Inzsr        Begsr
+     C                   Eval      PgmNam = 'ITEMINQ'
+     C                   Exfmt     Prompt
+     C                   Endsr 
