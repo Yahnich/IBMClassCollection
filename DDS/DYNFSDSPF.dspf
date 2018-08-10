@@ -1,0 +1,52 @@
+     A                                      REF(EMPLOYEE)
+     A                                      CA03(03)
+     A                                      INDARA
+
+      ** Subfile Record format
+
+     A          R RECORD                    SFL
+     A            WORKDEPT  R        O  9  5
+     A            EMPNO     R        O  9 20
+     A            LASTNAME  R        O  9 55
+
+      ** Subfile Control format
+
+     A          R CONTROL                   SFLCTL(RECORD)
+     A                                      SFLSIZ(0011)
+     A                                      SFLPAG(0010)
+     A  85                                  SFLDSPCTL
+     A  95                                  SFLDSP
+     A  75                                  SFLCLR
+     A  90                                  SFLEND(*MORE)
+     A                                      OVERLAY PUTOVR
+
+     A                                  2  7DATE   EDTCDE(Y)
+     A                                  2 32'Employee List'
+     A                                       DSPATR(HI)
+     A                                  2 65USER
+     A                                  4  2'Enter Work Department:'
+     A            WORKDEPT  R        I  4 30
+     A                                  5  2'Sequence:'
+     A                                  5 15'Last Name?'
+     A            NAMEORDER      1A  B  5 30OVRDTA
+     A  30                                  DSPATR(PR)
+     A                                  5 35'Employee Number?'
+     A            EMPORDER       1A  B  5 55OVRDTA
+     A  30                                  DSPATR(PR)
+     A
+     A                                  7  5'Work Dept.'
+     A                                  7 20'Employee'
+     A*                                 7 28'First Name'
+     A                                  7 55'Surname'
+
+      ** Function key narrative
+
+     A          R FNKEYS
+     A                                 23  7'F3=Exit'
+
+      ** MESSAGE FOR EMPTY SUBFILE
+
+     A          R MSG
+     A                                      OVERLAY
+     A                                 12 32'No Records Found'
+     A                                      DSPATR(HI) 
